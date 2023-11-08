@@ -4,18 +4,18 @@
     "short_name": "tic80",
     "description": "TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games.",
 
-    "start_url": "index.html",
+    "start_url": "/tic80-pwa/index.html",
     "display": "standalone",
     "background_color": "#333c57",
     "theme_color": "#94b0c2",
     "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "icons/16.png",
+        "src": "/tic80-pwa/icons/16.png",
         "type": "image/png", "sizes": "16x16"
       },
       {
-        "src": "icons/144.png",
+        "src": "/tic80-pwa/icons/144.png",
         "type": "image/png", "sizes": "144x144"
       }
     ]
