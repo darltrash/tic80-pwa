@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="manifest.json">
-
-    <link rel="icon" type="image/x-icon" href="icons/16.png">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#94b0c2">
 
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="icons/16.png">
+
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3b5dc9">
+    <meta name="msapplication-TileColor" content="#3b5dc9">
+    <meta name="theme-color" content="#3b5dc9">
+
     <title>TIC-80 tiny computer</title>
 
     <style type="text/css">
-        #game-frame > div { font-size: 44px; font-family: monospace; font-weight: bold;}
+        canvas {
+            width: 258px; 
+            height: 155px;
+            image-rendering: pixelated;
+            
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
 
-        /* You can set custom dimensions here */
-        .game { width: 100vw; height: 100vh; }
-
-        /* Uncomment to remove the frame on top of the canvas and start the game directly */
-        /* #game-frame { display: none; } */
+        body { margin:0; padding:0; background-color: #1a1c2c;}
+        
+        button {
+            margin: 0.5em; 
+        }
     </style>
 </head>
-<body style="margin:0; padding:0;">
-
-    <div class="game" style="margin: 0; position: relative; background: #1a1c2c;">
-
-        <div id="game-frame" style="cursor: pointer; position: absolute; margin: 0 auto; opacity: 1; background: #1a1c2c; width: 100%; height: 100%;">
-            <div style="text-align: center; color: white; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
-                <p style="margin: 0;">- CLICK TO PLAY -</p>
-            </div>
-
-        </div>
-
-        <canvas style="width: 100%; height: 100%; margin: 0 auto; display: block; image-rendering: pixelated;" id="canvas" oncontextmenu="event.preventDefault()" onmousedown="window.focus()"></canvas>
-    </div>
+<body>
+    <canvas
+        id="canvas"
+        oncontextmenu="event.preventDefault()" 
+        onmousedown="window.focus()">
+    </canvas>
 
     <script type="text/javascript">
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("sw.js");
         }
 
-        var Module = {canvas: document.getElementById('canvas'), arguments:[]}
+        var Module = {
+            canvas: document.getElementById('canvas'), 
+            arguments:[]
+        };
 
-        const gameFrame = document.getElementById('game-frame')
-        const displayStyle = window.getComputedStyle(gameFrame).display;
+        window.onresize = (e) => {
+            const ws = window.innerWidth  / 258;
+            const hs = window.innerHeight / 155;
+            const s = Math.floor(Math.min(ws, hs));
 
-        if (displayStyle === 'none') 
-        {
-            let scriptTag = document.createElement('script'), // create a script tag
-            firstScriptTag = document.getElementsByTagName('script')[0]; // find the first script tag in the document
-            scriptTag.src = 'tic80.js'; // set the source of the script to your script
-            firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
-        } else {
-            gameFrame.addEventListener('click', function() {
-                let scriptTag = document.createElement('script'), // create a script tag
-                firstScriptTag = document.getElementsByTagName('script')[0]; // find the first script tag in the document
-                scriptTag.src = 'tic80.js'; // set the source of the script to your script
-                firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
-                this.remove()
-            });
+            Module.canvas.style.scale = s;
+        };
+        window.onresize();
+
+        let scriptTag = document.createElement('script');
+        scriptTag.src = "tic80.js";
+        document.body.append(scriptTag);
+
+        function directory() {
+            let database = indexedDB.open("/com.nesbox.tic/TIC-80");
+            console.log(database);
         }
     </script>
+
+    <button onclick="directory();">📁</button>
 </body>
 </html>

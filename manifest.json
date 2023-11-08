@@ -1,13 +1,13 @@
 {
     "id": "tic80",
-    "name": "Tic80",
-    "short_name": "tic80",
+    "name": "TIC-80",
+    "short_name": "TIC80",
     "description": "TIC-80 is a free and open source fantasy computer for making, playing and sharing tiny games.",
 
     "start_url": "/tic80-pwa/index.html",
     "display": "standalone",
     "background_color": "#333c57",
-    "theme_color": "#94b0c2",
+    "theme_color": "#3b5dc9",
     "orientation": "portrait-primary",
     "icons": [
       {
